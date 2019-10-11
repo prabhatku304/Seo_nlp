@@ -1,11 +1,15 @@
-import nltk
+import nltk,math
 import os
 import nltk.corpus
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.probability import FreqDist
 from collections import Counter
+from math import log10,sqrt
+from nltk.stem.porter import PorterStemmer
 
+
+stemmer = PorterStemmer()
 corp='./data'
 root = os.listdir(corp)
 df=Counter()
@@ -31,7 +35,7 @@ for filename in root:
     tf.clear()
 
 
-def weigth(filename,token):
+def weight(filename,token):
     idf=getidf(token)
     return (1+log10(tfs[filename][token]))*idf
 
@@ -51,7 +55,7 @@ for filename in tfs:
         
 for filename in vector:
     for token in vector[filename]:
-        vector[filename][token] = vector[filename][token] / lenghts[filename]
+        vector[filename][token] = vector[filename][token] / lengths[filename]
         if token not in posting_list:
             posting_list[token]=Counter()
         posting_list[token][filename]=vector[filename][token]
@@ -69,6 +73,7 @@ def query(inputstring):
     loc_docs={}
     tenth={}
     cos_sims=Counter()
+    track={}
     q_tokens = word_tokenize(inputstring)
     
     for token in q_tokens:
@@ -78,7 +83,7 @@ def query(inputstring):
         if getidf(token)==0:
             loc_docs[token],weights = zip(*posting_list[token].most_common())
         else:
-            loc_docs[token],weights = zip(*posting_list[token].most_common(5))
+            loc_docs[token],weights = zip(*posting_list[token].most_common(10))
         tenth[token]=weights[9]
         if ct==1:
             track = set(loc_docs[token]) & track
@@ -94,7 +99,7 @@ def query(inputstring):
             if doc in loc_docs[token]:
                 cos_sim = cos_sim + (qtf[token]/ qlength) * posting_list[token][doc]
             else:
-                cos_sim = cos_sim + (qtf[token / qlength]) * tenth[token]
+                cos_sim = cos_sim + (qtf[token] / qlength) * tenth[token]
         cos_sims[doc] = cos_sim
     max = cos_sims.most_common(5)
     ans,wght = zip(*max)
@@ -104,4 +109,8 @@ def query(inputstring):
         else:
             return "fetch more"
     except UnboundLocalError:
-        return "none
+        return "none"
+    
+    
+    
+print( query("health insurance wall street"))
