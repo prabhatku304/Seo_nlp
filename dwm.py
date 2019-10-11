@@ -86,10 +86,10 @@ class Toplevel1:
              "-underline 0 -overstrike 0"
         font10 = "-family {DejaVu Sans} -size 10 -weight bold -slant "  \
              "roman -underline 0 -overstrike 0"
-        font11 = "-family {DejaVu Sans} -size 12 -weight normal -slant"  \
+        font11 = "-family {DejaVu Sans} -size 11 -weight normal -slant"  \
             " roman -underline 0 -overstrike 0"
         top.geometry("600x450+385+135")
-        top.title("New Toplevel")
+        top.title("Search Engine")
 
         self.Text1 = tk.Text(top)
         self.Text1.place(relx=0.133, rely=0.156, relheight=0.098, relwidth=0.693)
