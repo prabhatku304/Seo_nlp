@@ -31,6 +31,14 @@ for filename in root:
     tf.clear()
 
 
+def weigth(filename,token):
+    idf=getidf(token)
+    return (1+log10(tfs[filename][token]))*idf
+
+def getidf(token):
+    if df[token]==0:
+        return -1
+    return log10(len(tfs) / df[token])
 
 for filename in tfs:
     vector[filename]=Counter()
@@ -52,12 +60,14 @@ def getWeight(filename,token):
     return vector[filename][token]
 
 
+
 def query(inputstring):
     inputstring = inputstring.lower()
     qtf={}
     qlength=0
     ct=0
     loc_docs={}
+    tenth={}
     cos_sims=Counter()
     q_tokens = word_tokenize(inputstring)
     
@@ -66,10 +76,10 @@ def query(inputstring):
         if token not in posting_list:
             continue
         if getidf(token)==0:
-            loc_docs[token],weight = zip(*posting_list[token].most_common())
+            loc_docs[token],weights = zip(*posting_list[token].most_common())
         else:
-            loc_docs[token],weight = zip(*posting_list[token].most_common(5))
-        
+            loc_docs[token],weights = zip(*posting_list[token].most_common(5))
+        tenth[token]=weights[9]
         if ct==1:
             track = set(loc_docs[token]) & track
         else:
@@ -79,4 +89,19 @@ def query(inputstring):
         qlength+=qtf[token]**2
     qlength=sqrt(qlength)
     for doc in vector:
-        
+        cos_sim=0
+        for token in qtf:
+            if doc in loc_docs[token]:
+                cos_sim = cos_sim + (qtf[token]/ qlength) * posting_list[token][doc]
+            else:
+                cos_sim = cos_sim + (qtf[token / qlength]) * tenth[token]
+        cos_sims[doc] = cos_sim
+    max = cos_sims.most_common(5)
+    ans,wght = zip(*max)
+    try:
+        if ans[0] in track:
+            return ans
+        else:
+            return "fetch more"
+    except UnboundLocalError:
+        return "none
