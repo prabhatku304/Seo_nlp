@@ -113,4 +113,3 @@ def query(inputstring):
     
     
     
-print( query("health insurance wall street"))

@@ -6,6 +6,8 @@
 #    Oct 11, 2019 02:15:24 PM IST  platform: Linux
 
 import sys
+import engine
+from engine import query
 
 try:
     import Tkinter as tk
@@ -44,7 +46,25 @@ def destroy_Toplevel1():
     w.destroy()
     w = None
 
+q_result_1="h"
+
 class Toplevel1:
+    
+   
+    
+    def retreive_input(self):
+        new_text = self.Text1.get("1.0","end-1c")
+        self.q_result = query(new_text)
+        q_result_1 = self.q_result[0]
+        print(q_result_1)
+        i=1
+        for result in self.q_result:
+            self.Listbox1.insert(i,result)
+            i=i+1
+        self.q_result.clear()
+        i=1
+        
+        
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -53,7 +73,7 @@ class Toplevel1:
         _compcolor = '#d9d9d9' # X11 color: 'gray85'
         _ana1color = '#d9d9d9' # X11 color: 'gray85'
         _ana2color = '#ececec' # Closest X11 color: 'gray92'
-
+       
         top.geometry("600x450+385+135")
         top.title("New Toplevel")
 
@@ -64,10 +84,12 @@ class Toplevel1:
         self.Text1.configure(font="TkTextFont")
         self.Text1.configure(selectbackground="#c4c4c4")
         self.Text1.configure(wrap="word")
+        
 
         self.Button1 = tk.Button(top)
         self.Button1.place(relx=0.7, rely=0.333, height=31, width=72)
         self.Button1.configure(text='''Search''')
+        self.Button1.configure(command=self.retreive_input)
 
         self.Canvas1 = tk.Canvas(top)
         self.Canvas1.place(relx=0.117, rely=0.489, relheight=0.38
@@ -81,6 +103,8 @@ class Toplevel1:
                 , relwidth=0.961)
         self.Listbox1.configure(background="white")
         self.Listbox1.configure(font="TkFixedFont")
+        
+    
 
 if __name__ == '__main__':
     vp_start_gui()
