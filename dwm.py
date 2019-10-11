@@ -82,7 +82,12 @@ class Toplevel1:
         _compcolor = '#d9d9d9' # X11 color: 'gray85'
         _ana1color = '#d9d9d9' # X11 color: 'gray85'
         _ana2color = '#ececec' # Closest X11 color: 'gray92'
-       
+        font9 = "-family FreeSerif -size 16 -weight bold -slant roman "  \
+             "-underline 0 -overstrike 0"
+        font10 = "-family {DejaVu Sans} -size 10 -weight bold -slant "  \
+             "roman -underline 0 -overstrike 0"
+        font11 = "-family {DejaVu Sans} -size 12 -weight normal -slant"  \
+            " roman -underline 0 -overstrike 0"
         top.geometry("600x450+385+135")
         top.title("New Toplevel")
 
@@ -90,8 +95,9 @@ class Toplevel1:
         self.Text1.place(relx=0.133, rely=0.156, relheight=0.098, relwidth=0.693)
 
         self.Text1.configure(background="white")
-        self.Text1.configure(font="TkTextFont")
+        self.Text1.configure(font=font11)
         self.Text1.configure(selectbackground="#c4c4c4")
+        self.Text1.configure(spacing1="6")
         self.Text1.configure(wrap="word")
         
 
@@ -99,11 +105,13 @@ class Toplevel1:
         self.Button1.place(relx=0.7, rely=0.333, height=31, width=72)
         self.Button1.configure(text='''Search''')
         self.Button1.configure(command=self.retreive_input)
+        self.Button1.configure(font=font10)
         
         self.Button2 = tk.Button(top)
         self.Button2.place(relx=0.117, rely=0.889, height=31, width=431)
         self.Button2.configure(text='''Clear''')
         self.Button2.configure(command=self.clear_box)
+        self.Button1.configure(font=font10)
 
         self.Canvas1 = tk.Canvas(top)
         self.Canvas1.place(relx=0.117, rely=0.489, relheight=0.38
@@ -114,10 +122,15 @@ class Toplevel1:
 
         self.Listbox1 = tk.Listbox(self.Canvas1)
         self.Listbox1.place(relx=0.023, rely=0.058, relheight=0.854
-                , relwidth=0.961)
-        self.Listbox1.configure(background="white")
-        self.Listbox1.configure(font="TkFixedFont")
-        
+               , relwidth=0.961)
+        self.Listbox1.configure(background="#d8ffa6")
+        self.Listbox1.configure(font=font9)
+        self.Listbox1.configure(highlightbackground="#0a2625")
+        self.Listbox1.configure(highlightcolor="#c6b64b")
+        self.Listbox1.configure(selectbackground="#3ac19d")
+        self.Listbox1.configure(selectborderwidth="10")
+        self.Listbox1.configure(selectforeground="#d3d3d3")
+         
     
 
 if __name__ == '__main__':
