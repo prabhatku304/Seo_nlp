@@ -46,26 +46,35 @@ def destroy_Toplevel1():
     w.destroy()
     w = None
 
-q_result_1="h"
+
 
 class Toplevel1:
     
-   
+     
     
     def retreive_input(self):
         new_text = self.Text1.get("1.0","end-1c")
         self.q_result = query(new_text)
-        q_result_1 = self.q_result[0]
-        print(q_result_1)
+        print(self.q_result)
         i=1
+        if self.flag == 2:
+            self.Listbox1.delete(0, tk.END)
+            self.flag=1
+        else:
+            self.flag=2
         for result in self.q_result:
             self.Listbox1.insert(i,result)
             i=i+1
-        self.q_result.clear()
-        i=1
+       
+    def clear_box(self):
+        self.Listbox1.delete(0, tk.END)
+       
+       
+        
         
         
     def __init__(self, top=None):
+        self.flag = 1
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
         _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
@@ -90,6 +99,11 @@ class Toplevel1:
         self.Button1.place(relx=0.7, rely=0.333, height=31, width=72)
         self.Button1.configure(text='''Search''')
         self.Button1.configure(command=self.retreive_input)
+        
+        self.Button2 = tk.Button(top)
+        self.Button2.place(relx=0.117, rely=0.889, height=31, width=431)
+        self.Button2.configure(text='''Clear''')
+        self.Button2.configure(command=self.clear_box)
 
         self.Canvas1 = tk.Canvas(top)
         self.Canvas1.place(relx=0.117, rely=0.489, relheight=0.38
