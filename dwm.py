@@ -95,6 +95,7 @@ class Toplevel1:
         self.Text1.place(relx=0.133, rely=0.156, relheight=0.098, relwidth=0.693)
 
         self.Text1.configure(background="white")
+        self.Text1.place(relx=0.14, rely=0.14, relheight=0.088, relwidth=0.727)
         self.Text1.configure(font=font11)
         self.Text1.configure(selectbackground="#c4c4c4")
         self.Text1.configure(spacing1="6")
